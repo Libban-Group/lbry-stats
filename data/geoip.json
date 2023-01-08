@@ -1,0 +1,54 @@
+{
+    "51.81.46.83": {
+        "country": "United States",
+        "countryCode": "US",
+        "city": "Warrenton",
+        "timezone": "America/New_York",
+        "organization": "OVH SAS",
+        "details": "LBRY Inc."
+    },
+    "51.81.57.64": {
+        "country": "United States",
+        "countryCode": "US",
+        "timezone": "America/New_York",
+        "organization": "OVH SAS",
+        "details": "Odysee Inc."
+    },
+    "149.102.153.137": {
+        "country": "United Kingdom",
+        "countryCode": "GB",
+        "city": "Portsmouth",
+        "timezone": "Europe/London",
+        "organization": "Contabo GmbH",
+        "details": "Pigges"
+    },
+    "95.217.82.93": {
+        "country": "Finland",
+        "countryCode": "FI",
+        "city": "Helsinki",
+        "timezone": "Europe/Helsinki",
+        "organization": "Hetzner Online GmbH",
+        "details": "Pigges"
+    },
+    "135.148.122.112": {
+        "country": "United States",
+        "countryCode": "US",
+        "city": "Reston",
+        "timezone": "America/New_York",
+        "organization": "OVH SAS"
+    },
+    "37.143.217.185": {
+        "country": "Bulgaria",
+        "countryCode": "BG",
+        "city": "Chirpan",
+        "timezone": "Europe/Sofia",
+        "organization": "Bulsatcom EOOD"
+    },
+    "47.72.225.20": {
+        "country": "New Zealand",
+        "countryCode": "NZ",
+        "city": "Auckland",
+        "timezone": "Pacific/Auckland",
+        "organization": "Vodafone NZ Ltd."
+    }
+}

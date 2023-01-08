@@ -1,0 +1,194 @@
+<style>
+    * {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #f9d75e;
+    background-color: #292b2d;
+}
+
+.title {
+    text-align: center;
+}
+
+.header .text {
+    display: flex;
+    gap: 10px;
+    text-decoration: none;
+    justify-content: center;
+    margin: auto;
+}
+
+.header .hint {
+    text-align: center;
+}
+
+.header .title {
+    text-align: center;
+    color: #f9d75e;
+}
+
+.header svg {
+    width: 50px;
+}
+
+.search {
+    display: flex;
+    margin: auto;
+    width: 500px;
+    max-width: 80%;
+    margin-top: 10px;
+    background-color: rgba(0,0,0,0.3);
+    outline: 2px solid #f9d75e;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.search:hover {
+    background-color: rgba(0,0,0,0.2);
+}
+
+.search:focus {
+    background-color: rgba(0,0,0,0.1);
+}
+
+.search #query {
+    width: 100%;
+    outline: none;
+    border: none;
+    background: none;
+    margin: 0 20px;
+    color: #c46222;
+}
+
+.search #search {
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    border: none;
+    background-color: #c46222;
+    cursor: pointer;
+}
+
+.search #search svg {
+    width: 100%;
+}
+
+.search #search svg path {
+    stroke: #f9d75e;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    outline: 2px solid #f9d75e;
+    background-color: rgba(255,255,255, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+}
+
+.wrapper .logo {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 80%;
+    margin: 20px auto;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.wrapper .logo svg {
+    width: 200px;
+}
+
+.details {
+    max-width: 700px;
+    text-align: initial;
+}
+
+.wrapper #details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.wrapper #details .img {
+    display: flex;
+    align-items: center;
+    width: 200px;
+    max-height: 200px;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.wrapper #details .img img {
+    width: 100%;
+}
+
+.map {
+    position: relative;
+}
+
+#map {
+    display: flex;
+    width: 70%;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 20px;
+    outline: 2px solid rgba(249, 215, 94, 0.5);
+    background-color: rgba(255,255,255, 0.1);
+    transition: 0.5s;
+}
+
+.country {
+    fill: rgba(0, 0, 0, 0);
+    stroke: #fff;
+    stroke-width: 0.5px;
+    transition: 0.2s;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.country:hover {
+    fill: rgba(0, 0, 0, 0.2);
+    opacity: 0.5;
+}
+
+.loading {
+    position: relative;
+    filter: blur(5px);
+}
+
+.loading ~ .loader {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    left: 0;
+    right: 0;
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #f9d75e; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
