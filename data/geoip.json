@@ -50,5 +50,21 @@
         "city": "Auckland",
         "timezone": "Pacific/Auckland",
         "organization": "Vodafone NZ Ltd."
+    },
+    "162.247.131.51": {
+        "country": "United States",
+        "countryCode": "US",
+        "city": "Story City",
+        "timezone": "America/Chicago",
+        "organization": "INFOBUNKER",
+        "details": "Madiator"
+    },
+    "141.94.77.204": {
+        "country": "France",
+        "countryCode": "FR",
+        "city": "Roubaix",
+        "timezone": "Europe/Paris",
+        "organization": "OVH SAS",
+        "details": "Grin"
     }
 }
