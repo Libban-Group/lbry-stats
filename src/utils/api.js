@@ -53,9 +53,11 @@ async function blob_peers(query) {
 
     peer_list = await iplookup(peer_list);
 
+    console.log(resolve.result);
+
     return {
         title: resolve.result.metadata.source.name,
-        channel: resolve.result.channel_name + ':' + resolve.result.channel_claim_id,
+        channel: resolve.result.channel_name ? resolve.result.channel_name + ':' + resolve.result.channel_claim_id : undefined,
         claim_id: resolve.result.claim_id,
         claim_name: resolve.result.claim_name,
         thumbnail: resolve.result.metadata.thumbnail ? resolve.result.metadata.thumbnail.url : '#',
