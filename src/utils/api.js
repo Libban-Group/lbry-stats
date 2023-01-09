@@ -45,22 +45,23 @@ export default {
 async function blob_peers(query) {
     if (!query.query) return {"message": "expected query"};
 
-    const resolve = await (await API('get', {uri: query.query})).json();
+    let resolve = await (await API('resolve', {urls: query.query})).json();
+    resolve = Object.values(resolve.result)[0];
     let peer_list = await pagination('peer_list', {
-        "blob_hash": resolve.result.sd_hash,
+        "blob_hash": resolve.value.source.sd_hash,
         "page_size": 50
     });
 
     peer_list = await iplookup(peer_list);
 
-    console.log(resolve.result);
+    console.log(resolve);
 
     return {
-        title: resolve.result.metadata.source.name,
-        channel: resolve.result.channel_name ? resolve.result.channel_name + ':' + resolve.result.channel_claim_id : undefined,
-        claim_id: resolve.result.claim_id,
-        claim_name: resolve.result.claim_name,
-        thumbnail: resolve.result.metadata.thumbnail ? resolve.result.metadata.thumbnail.url : '#',
+        title: resolve.value.title,
+        channel: resolve.signing_channel.canonical_url ? resolve.signing_channel.canonical_url.split('lbry://')[1].replaceAll('#', ':') : undefined,
+        claim_id: resolve.claim_id,
+        claim_name: resolve.name,
+        thumbnail: resolve.value.cover ? resolve.value.cover.url : '#',
         peers: peer_list
     };
 }
