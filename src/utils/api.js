@@ -56,10 +56,10 @@ async function blob_peers(query) {
 
     return {
         title: resolve.value.title,
-        channel: resolve.signing_channel.canonical_url ? resolve.signing_channel.canonical_url.split('lbry://')[1].replaceAll('#', ':') : undefined,
+        channel: resolve.signing_channel ? resolve.signing_channel.canonical_url.split('lbry://')[1].replaceAll('#', ':') : undefined,
         claim_id: resolve.claim_id,
         claim_name: resolve.name,
-        thumbnail: resolve.value.thumbnail ? resolve.value.thumbnail.url : '#',
+        thumbnail: resolve.value.thumbnail.url ? resolve.value.thumbnail.url : '#',
         peers: peer_list
     };
 }
