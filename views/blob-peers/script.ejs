@@ -19,6 +19,58 @@
         const json = await resp.json();
 
         // Set up claim details
+        handleClaimDetails(json);
+
+
+        const details = document.getElementById('details');
+        details.classList.toggle('loading');
+
+        // Create country list which will contain all peers sorted by country
+        let country_list = {};
+
+        // Go through each peer and sort it by country
+        for (let i in json.peers) {
+            const peer = json.peers[i];
+            if (!peer.geo) continue;
+
+            // To lower case and replace spaced with '-' so it matches the classes in the svg
+            const country = peer.geo.country.toLowerCase().replaceAll(' ', '_');
+
+            // If the country are not yet in the list, create an empty list for it
+            if (!country_list[country]) country_list[country] = [];
+
+            // Push the peer to the country list
+            country_list[country].push(peer);
+        }
+
+        // Add elements to node list
+        handleNodeList(json.peers);
+
+        // Add elements to country list
+        handleCountryList(country_list, json.peers.length);
+
+
+        // Create new style element
+        const cssStyle = document.createElement('style');
+
+        // Add color to all the countries with a peer in it
+        for (const i in country_list) {
+            const country = document.getElementsByClassName(i);
+            const setting = document.createTextNode(`.${i},.${i}:hover{fill: rgb(255, 165, 0);}`);
+            cssStyle.appendChild(setting);
+        }
+
+        // Append the styling element to the head element
+        document.getElementsByTagName("head")[0].appendChild(cssStyle);
+
+        // Remove loading class from the map
+        const map = document.getElementById('map');
+        map.classList.toggle('loading');
+
+        console.log(country_list);
+    }
+
+    function handleClaimDetails(json) {
         const title = document.getElementById('title-detail');
         title.innerText = json.title;
         const channel = document.getElementById('channel-detail');
@@ -31,34 +83,11 @@
         thumbnail.src = json.thumbnail;
         const link = document.getElementById('link-detail');
         link.href = `https://lbry.pigg.es/?q=${json.channel ? json.channel + '/' : ''}${json.claim_name + ':' + json.claim_id}`;
+    }
 
-
-        const details = document.getElementById('details');
-        details.classList.toggle('loading');
-
-        // Create country list which will contain all peers sorted by country
-        let county_list = {};
-
-        // Go through each peer and sort it by country
-        for (let i in json.peers) {
-            const peer = json.peers[i];
-            if (!peer.geo) continue;
-
-            // To lower case and replace spaced with '-' so it matches the classes in the svg
-            const country = peer.geo.country.toLowerCase().replaceAll(' ', '_');
-
-            // If the country are not yet in the list, create an empty list for it
-            if (!county_list[country]) county_list[country] = [];
-
-            // Push the peer to the country list
-            county_list[country].push(peer);
-        }
-
-        // Add elements to table
-        const tbody = document.getElementById('tbody');
-        for (const i in json.peers) {
-            const peer = json.peers[i];
-
+    function handleNodeList(peers) {
+        const node_table = document.getElementById('node-table');
+        peers.forEach(peer=>{
             const row = document.createElement('tr');
             const address = document.createElement('td');
             address.innerText = peer.address || '-';
@@ -74,32 +103,45 @@
             row.appendChild(isp);
             row.appendChild(details);
 
-            tbody.appendChild(row);
-        }
+            node_table.appendChild(row);
+        });
 
         // Remove loading class from node list
         const node_list = document.getElementById('node-list-wrapper');
         node_list.classList.toggle('loading');
+    }
+
+    function handleCountryList(country_list, amount) {
+        const country_table = document.getElementById('country-table');
+
+        // Convert to array and sort by %
+        country_list = Object.values(country_list);
+        country_list.sort(function(a,b){
+            return b.length - a.length; //ASC, For Descending order use: b - a
+        });
 
 
-        // Create new style element
-        const cssStyle = document.createElement('style');
+        country_list.forEach(country => {
+            console.log(country);
 
-        // Add color to all the countries with a peer in it
-        for (const i in county_list) {
-            const country = document.getElementsByClassName(i);
-            const setting = document.createTextNode(`.${i},.${i}:hover{fill: rgb(255, 165, 0);}`);
-            cssStyle.appendChild(setting);
-        }
+            const row = document.createElement('tr');
+            const c = document.createElement('td');
+            c.innerText = country[0].geo ? country[0].geo.country : (i.charAt(0).toUpperCase() + i.slice(1)).replaceAll('_', ' ');;
+            const num = document.createElement('td');
+            num.innerText = country.length;
+            const proc = document.createElement('td');
+            proc.innerText = Math.floor((country.length / amount)*10000)/100;
 
-        // Append the styling element to the head element
-        document.getElementsByTagName("head")[0].appendChild(cssStyle);
+            row.appendChild(c);
+            row.appendChild(num);
+            row.appendChild(proc);
 
-        // Remove loading class from the map
-        const map = document.getElementById('map');
-        map.classList.toggle('loading');
+            country_table.appendChild(row);
+        });
 
-        console.log(county_list);
+        // Remove loading class from country list
+        const country_list_wrapper = document.getElementById('country-list-wrapper');
+        country_list_wrapper.classList.toggle('loading');
     }
 
     
