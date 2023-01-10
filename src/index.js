@@ -1,10 +1,11 @@
 import Bao from "baojs";
-import render from './utils/render.js';
 import api from './utils/api.js';
+import pages from './pages.js';
 import serveStatic from "serve-static-bun";
 
 const app = new Bao();
 
+// Serve everything in the public directory at /public
 app.get("/public/*any", serveStatic("public", { middlewareMode: "bao", stripFromPathname: "/public" }));
 
 app.post("/api/:endpoint", async (ctx) => {
@@ -17,17 +18,6 @@ app.post("/api/:endpoint", async (ctx) => {
     return ctx.sendJson(peers);
 });
 
-app.get("/blob-peers", async (ctx) => {
-    let res;
-    try {
-        // Get the query from URL
-        const query = new URL(ctx.url).searchParams.get('q');
-        res = new Response(await render('./views/blob-peers/index.ejs', {query}));
-        res.headers.set('Content-Type', 'text/html; charset=utf-8');
-    } catch (err) {
-        res = new Response(err);
-    }
-    return ctx.sendRaw(res);
-});
+pages(app);
 
 app.listen({ port: process.env.PORT || 3000 });

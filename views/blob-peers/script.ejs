@@ -2,6 +2,14 @@
     // Get the query from URL
     const query = new URL(window.location.href).searchParams.get('q');
 
+    if (query) {
+        const claim = document.getElementById('claim');
+        claim.style.display = 'initial';
+        const hero = document.getElementById('hero');
+        hero.style.display = 'none';
+        getData(query);
+    }
+
     // Get data for the query
     async function getData(query) {
         const resp = await fetch('/api/blob-peers', {
@@ -10,9 +18,7 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                query
-            })
+            body: JSON.stringify({query})
         });
 
         // Get JSON response
@@ -143,7 +149,4 @@
         const country_list_wrapper = document.getElementById('country-list-wrapper');
         country_list_wrapper.classList.toggle('loading');
     }
-
-    
-    getData(query);
 </script>

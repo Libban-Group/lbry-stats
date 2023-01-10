@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "start": "bun run src/index.js",
-    "dev": "nodemon --exec bun run src/index.js"
+    "dev": "DEV=true nodemon --exec bun run src/index.js"
   },
   "devDependencies": {
     "bun-types": "^0.4.0"

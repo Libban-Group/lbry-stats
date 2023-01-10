@@ -7,19 +7,21 @@
     <title>LBRY Statistics</title>
     <link rel="shortcut icon" href="/public/favicon.svg" type="image/x-icon">
     <%- include('../styles.ejs') %>
-    <%- include('./script.ejs') %> 
 </head>
 <body>
     <%- include('../header.ejs') %>
-    <% if (!query) { %>
-        <%- include('../hero.ejs') %> 
-    <% } else { %>
+    <div id="hero">
+        <%- include('./hero.ejs') %> 
+    </div>
+    
+    <div id="claim">
         <%- include('../details.ejs') %>
         <%- include('../map.ejs') %>
         <%- include('../country-table.ejs') %>
         <%- include('../node-table.ejs') %>
-    <% } %>
-
+    </div>
+    
     <%- include('../peer-ping.ejs') %>
+    <%- include('./script.ejs') %> 
 </body>
 </html>
