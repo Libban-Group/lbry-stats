@@ -7,7 +7,7 @@
     "dev": "nodemon --exec bun run src/index.js"
   },
   "devDependencies": {
-    "bun-types": "^0.3.0"
+    "bun-types": "^0.4.0"
   },
   "dependencies": {
     "baojs": "^0.2.1",
