@@ -1,4 +1,4 @@
-import iplookup from "./iplookup.js";
+import iplookup from "./utils/iplookup.js";
 
 async function API(method, params) {
     return await fetch("http://localhost:5279/", {
@@ -38,8 +38,41 @@ async function pagination(method, params) {
 }
 
 export default {
+    "sdk-nodes": sdk_nodes,
     "blob-peers": blob_peers,
     "peer-ping": peer_ping
+}
+
+async function sdk_nodes() {
+    let resp = {};
+
+    try {
+        const nodes = await (await API('routing_table_get')).json();
+
+        if (nodes.error) resp = nodes.error;
+        else {
+            const buckets = Object.values(nodes.result.buckets);
+            resp.nodes = [];
+
+            buckets.forEach(bucket =>{
+                resp.nodes = resp.nodes.concat(bucket);
+            })
+
+            // Add total_nodes
+            resp.total_nodes = resp.nodes.length;
+
+            // Add geoip info
+            resp.nodes = await iplookup(resp.nodes);
+        }
+
+
+        // console.log(nodes);
+    } catch (err) {
+        console.log(err);
+        resp.error = "fetching data";
+    }
+
+    return resp;
 }
 
 async function blob_peers(query) {

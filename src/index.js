@@ -1,5 +1,5 @@
 import Bao from "baojs";
-import api from './utils/api.js';
+import api from './api.js';
 import pages from './pages.js';
 import serveStatic from "serve-static-bun";
 
@@ -18,6 +18,8 @@ app.post("/api/:endpoint", async (ctx) => {
     return ctx.sendJson(peers);
 });
 
+// Enable pages
 pages(app);
 
 app.listen({ port: process.env.PORT || 3000 });
+console.log("LBRY Statistics started");

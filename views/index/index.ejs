@@ -6,6 +6,7 @@
 <body>
     <%- include('../header.ejs', {hint: "View statistics about LBRY", search: false}) %>
     <%- include('./statCard.ejs', {title: "Blob Peers", description: "Search Blob Peers", link: "/blob-peers"}) %>
+    <%- include('./statCard.ejs', {title: "SDK Nodes", description: "View SDK Nodes", link: "/sdk-nodes"}) %>
     <%- include('./statCard.ejs', {title: "Blockchain Nodes", description: "Public LBRY Blockchain Network Overview", link: "https://nodes.madiator.com/"}) %>
 </body>
 </html>
