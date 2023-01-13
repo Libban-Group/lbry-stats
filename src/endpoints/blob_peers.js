@@ -15,6 +15,7 @@ export default async (query)=> {
         });
     });
 
+    // Add geoip information to the peer_list
     peer_list = await iplookup(peer_list);
 
     return {
