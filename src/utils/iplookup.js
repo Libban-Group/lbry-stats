@@ -2,7 +2,7 @@ import loadJSON from "./loadJSON.js";
 import saveJSON from "./saveJSON.js";
 
 export default async (ip_list)=>{
-    const geoip = loadJSON('/data/geoip.json') || {};
+    const geoip = loadJSON('/data/known_geoip.json') || {};
     for (const i in ip_list) {
         if (geoip[ip_list[i].address]) {
             ip_list[i].geo = geoip[ip_list[i].address];
