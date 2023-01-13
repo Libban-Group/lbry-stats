@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%- include('../head.ejs') %>
+<%- include('../og.ejs', {description: "View Statistics about the LBRY network.", title: null, page: "/"}) %>
+<%- include('../head.ejs') %>
 </head>
 <body>
     <%- include('../header.ejs', {hint: "View statistics about LBRY", search: false}) %>
