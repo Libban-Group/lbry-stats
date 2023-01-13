@@ -92,6 +92,12 @@
     }
 
     function handleNodeList(peers) {
+        // Sort by details
+        peers.sort(function(a,b){
+            if (a.geo.details) return -1;
+            return 1;
+        });
+
         const node_table = document.getElementById('node-table');
         peers.forEach(peer=>{
             const row = document.createElement('tr');

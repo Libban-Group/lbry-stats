@@ -62,6 +62,12 @@
     }
 
     function handleNodeList(nodes) {
+        // Sort by details
+        nodes.sort(function(a,b){
+            if (a.geo.details) return -1;
+            return 1;
+        });
+
         const node_table = document.getElementById('node-table');
         nodes.forEach(node=>{
             const row = document.createElement('tr');
