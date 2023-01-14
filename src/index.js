@@ -1,9 +1,16 @@
-import Bao from "baojs";
+import Bao from 'baojs';
 import api from './api.js';
 import pages from './pages.js';
-import serveStatic from "serve-static-bun";
+import serveStatic from 'serve-static-bun';
+import logger from './utils/logger.js';
 
 const app = new Bao();
+
+// Log requests
+app.before((ctx) => {
+    logger('info', `${ctx.method} ${URL(ctx.url).pathname}`);
+    return ctx;
+  });
 
 // Serve everything in the public directory at /public
 app.get("/public/*any", serveStatic("public", { middlewareMode: "bao", stripFromPathname: "/public" }));
