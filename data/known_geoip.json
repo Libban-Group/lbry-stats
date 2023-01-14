@@ -35,7 +35,8 @@
         "countryCode": "US",
         "city": "Reston",
         "timezone": "America/Chicago",
-        "organization": "OVH SAS"
+        "organization": "OVH SAS",
+        "details": "Odysee Inc."
     },
     "37.143.217.185": {
         "country": "Bulgaria",
