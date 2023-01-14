@@ -1,5 +1,6 @@
 import loadJSON from './loadJSON.js';
 import saveJSON from './saveJSON.js';
+import logger from './logger.js';
 
 // Load known geoip information
 const known_geoip = loadJSON('/data/known_geoip.json') || {};
@@ -8,6 +9,7 @@ const known_geoip = loadJSON('/data/known_geoip.json') || {};
 let cache_geoip = loadJSON('/data/cache_geoip.json', true) || {};
 
 export default async (ip_list)=>{
+    let updated;
     
     for (const i in ip_list) {
 
@@ -18,10 +20,12 @@ export default async (ip_list)=>{
         }
 
         // Use cache_geoip if exist and valid
-        if (cache_geoip[ip_list[i].address]) {
+        if (cache_geoip[ip_list[i].address] && new Date(cache_geoip[ip_list[i].address].expire) > Date.now()) {
             ip_list[i].geo = cache_geoip[ip_list[i].address];
             continue;
         }
+
+        logger('info', `IPLookup: ${ip_list[i].address}`);
 
         try {
             const geo = await (await fetch('https://get.geojs.io/v1/ip/geo/' + ip_list[i].address + '.json')).json();
@@ -38,12 +42,15 @@ export default async (ip_list)=>{
 
             // Add to cache_geoip
             cache_geoip[ip_list[i].address] = ip_list[i].geo;
+
+            // Update the known_geoip.json file
+            updated = true;
         } catch (err) {
             console.log(err);
         }
     }
     
     // Update cache_geoip.json
-    saveJSON('/data/cache_geoip.json', cache_geoip);
+    if (updated) saveJSON('/data/cache_geoip.json', cache_geoip);
     return ip_list;
 }
