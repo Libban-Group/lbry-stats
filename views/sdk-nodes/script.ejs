@@ -58,6 +58,11 @@
         const map = document.getElementById('map');
         map.classList.toggle('loading');
 
+        const total_nodes = document.getElementById('total_nodes');
+        const total = document.createElement('h1');
+        total.innerText = "Total nodes: " + json.total_nodes;
+        total_nodes.appendChild(total);
+
         console.log(country_list);
     }
 
