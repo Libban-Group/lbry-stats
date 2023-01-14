@@ -2,7 +2,7 @@
 
 View different statistics about LBRY.
 More statistics to come.
-Currently only Blob Peers available at the moment.
+Currently only Blob Peers and SDK Nodes available at the moment.
 
 ## Prerequisites
 Requirements for running this
