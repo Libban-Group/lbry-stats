@@ -66,5 +66,37 @@
         "timezone": "Europe/Paris",
         "organization": "OVH SAS",
         "details": "Grin"
+    },
+    "208.95.0.131": {
+        "country": "United States",
+        "countryCode": "US",
+        "city": "Peterson",
+        "timezone": "America/Chicago",
+        "organization": "INFOBUNKER",
+        "details": "Niko/Grin?"
+    },
+    "208.95.0.98": {
+        "country": "United States",
+        "countryCode": "US",
+        "city": "Peterson",
+        "timezone": "America/Chicago",
+        "organization": "INFOBUNKER",
+        "details": "Niko/Grin?"
+    },
+    "208.95.0.101": {
+        "country": "United States",
+        "countryCode": "US",
+        "city": "Peterson",
+        "timezone": "America/Chicago",
+        "organization": "INFOBUNKER",
+        "details": "Niko/Grin?"
+    },
+    "208.95.0.99": {
+        "country": "United States",
+        "countryCode": "US",
+        "city": "Peterson",
+        "timezone": "America/Chicago",
+        "organization": "INFOBUNKER",
+        "details": "Niko/Grin?"
     }
 }
