@@ -99,5 +99,45 @@
         "timezone": "America/Chicago",
         "organization": "INFOBUNKER",
         "details": "Niko/Grin?"
+    },
+    "208.95.0.109": {
+        "country": "United States",
+        "countryCode": "US",
+        "city": "Peterson",
+        "timezone": "America/Chicago",
+        "organization": "INFOBUNKER",
+        "details": "Niko/Grin?"
+    },
+    "208.95.0.121": {
+        "country": "United States",
+        "countryCode": "US",
+        "city": "Peterson",
+        "timezone": "America/Chicago",
+        "organization": "INFOBUNKER",
+        "details": "Niko/Grin?"
+    },
+    "208.95.0.106": {
+        "country": "United States",
+        "countryCode": "US",
+        "city": "Peterson",
+        "timezone": "America/Chicago",
+        "organization": "INFOBUNKER",
+        "details": "Niko/Grin?"
+    },
+    "208.95.0.132": {
+        "country": "United States",
+        "countryCode": "US",
+        "city": "Peterson",
+        "timezone": "America/Chicago",
+        "organization": "INFOBUNKER",
+        "details": "Niko/Grin?"
+    },
+    "208.95.0.107": {
+        "country": "United States",
+        "countryCode": "US",
+        "city": "Peterson",
+        "timezone": "America/Chicago",
+        "organization": "INFOBUNKER",
+        "details": "Niko/Grin?"
     }
 }
