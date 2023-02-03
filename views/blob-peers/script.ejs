@@ -94,6 +94,7 @@
     function handleNodeList(peers) {
         // Sort by details
         peers.sort(function(a,b){
+            if (!a.geo) return 1;
             if (a.geo.details) return -1;
             return 1;
         });
@@ -103,17 +104,21 @@
             const row = document.createElement('tr');
             const address = document.createElement('td');
             address.innerText = peer.address || '-';
-            const country = document.createElement('td');
-            country.innerText = peer.geo.country || '-';
-            const isp = document.createElement('td');
-            isp.innerText = peer.geo.organization || '-';
-            const details = document.createElement('td');
-            details.innerText = peer.geo.details || '-';
 
             row.appendChild(address);
-            row.appendChild(country);
-            row.appendChild(isp);
-            row.appendChild(details);
+
+            if (peer.geo) {
+                const country = document.createElement('td');
+                country.innerText = peer.geo.country || '-';
+                const isp = document.createElement('td');
+                isp.innerText = peer.geo.organization || '-';
+                const details = document.createElement('td');
+                details.innerText = peer.geo.details || '-';
+
+                row.appendChild(country);
+                row.appendChild(isp);
+                row.appendChild(details);
+            }
 
             node_table.appendChild(row);
         });

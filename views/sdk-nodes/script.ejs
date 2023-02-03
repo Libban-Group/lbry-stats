@@ -69,6 +69,7 @@
     function handleNodeList(nodes) {
         // Sort by details
         nodes.sort(function(a,b){
+            if (!a.geo) return 1;
             if (a.geo.details) return -1;
             return 1;
         });
@@ -78,17 +79,21 @@
             const row = document.createElement('tr');
             const address = document.createElement('td');
             address.innerText = node.address || '-';
-            const country = document.createElement('td');
-            country.innerText = node.geo.country || '-';
-            const isp = document.createElement('td');
-            isp.innerText = node.geo.organization || '-';
-            const details = document.createElement('td');
-            details.innerText = node.geo.details || '-';
 
             row.appendChild(address);
-            row.appendChild(country);
-            row.appendChild(isp);
-            row.appendChild(details);
+
+            if (node.geo) {
+                const country = document.createElement('td');
+                country.innerText = node.geo.country || '-';
+                const isp = document.createElement('td');
+                isp.innerText = node.geo.organization || '-';
+                const details = document.createElement('td');
+                details.innerText = node.geo.details || '-';
+
+                row.appendChild(country);
+                row.appendChild(isp);
+                row.appendChild(details);
+            }
 
             node_table.appendChild(row);
         });
