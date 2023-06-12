@@ -7,7 +7,7 @@
     "dev": "DEV=true nodemon --exec bun run src/index.js"
   },
   "devDependencies": {
-    "bun-types": "^0.5.4"
+    "bun-types": "^0.6.8"
   },
   "dependencies": {
     "baojs": "^0.2.1",
