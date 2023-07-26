@@ -1,0 +1,25 @@
+<div id="error">
+    <p>
+        Error: 
+        <span></span>
+    </p>
+</div>
+<script is:inline>
+    function setError(message) {
+        document.querySelector('#error').style.display = "block";
+        document.querySelector('#error p span').innerHTML = message;
+    }
+
+    function clearError() {
+        document.querySelector('#error').style.display = "none";
+    }
+</script>
+<style>
+    #error{
+        display: none;
+        padding: 10px 20px;
+        border-radius: 10px;
+        border: 1px solid #F00;
+        background-color: var(--dim1);
+    }
+</style>

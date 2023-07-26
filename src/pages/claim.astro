@@ -1,0 +1,183 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageTitle from '../components/PageTitle.astro';
+import Searchbar from '../components/Searchbar.astro';
+import Dropdown from '../components/Dropdown.astro';
+import Map from '../components/Map.astro';
+import Table from '../components/Table.astro';
+import TableScript from '../components/TableScript.astro';
+import LoadingCircle from '../components/LoadingCircle.astro';
+import ErrorMessage from '../components/ErrorMessage.astro';
+---
+
+<Layout title="Claim">
+	<TableScript/>
+	<PageTitle title="Claim" description="View statistics about a specific claim"/>
+	<div class="top">
+		<Searchbar name="Claim" description="claim_name:claim_id or claim_name" placeholder="e.g. elons-blue-check-mark:9"/>
+		<ErrorMessage/>
+		<LoadingCircle/>
+	</div>
+	<div id="box" class="box hide">
+		<Dropdown title="Claim Details" id="claim-details">
+			<div class="details">
+				<div id="details">
+				
+				</div>
+				<a class="thumbnail"><div class="img"><img id="thumbnail" src="" alt=""></div></a>
+			</div>
+		</Dropdown>
+		<Dropdown title="Node Map" id="node-map">
+			<Map/>
+		</Dropdown>
+		<Dropdown title="Country Table" id="country-dropdown">
+			<Table id="country-table"/>
+		</Dropdown>
+		<Dropdown title="Node Table" id="node-dropdown">
+			<Table id="node-table"/>
+		</Dropdown>
+	</div>
+	<script define:vars={{VIEWER_DOMAIN: process.env.VIEWER_DOMAIN}}>
+		const params = new Proxy(new URLSearchParams(window.location.search), {
+			get: (searchParams, prop) => searchParams.get(prop),
+		});
+
+		(async ()=>{
+			if (!params.q) return;
+
+			let resp;
+
+			const loading = document.querySelector('#loading');
+			loading.classList.add('loading');
+
+			try {
+				// Fetch from API
+				const req = await fetch('/api/claim', {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						claim: params.q
+					})
+				});
+
+				resp = (await req.json()).result;
+			} catch (err) {
+				console.log(err);
+				loading.classList.remove('loading');
+				setError("failed to send request");
+				return;
+			}
+
+			loading.classList.remove('loading');
+
+			if (resp.error) return setError(resp.error);
+
+			document.querySelector('#box').classList.remove('hide');
+			
+			map(resp.claim.peers);
+			information(resp.claim);
+			setupCountryTable(resp.claim.peers);
+			setupNodeTable(resp.claim.peers);
+		})();
+
+		function information(claim) {
+
+			const addDetail = (name, value)=> {
+				const detail = document.createElement('p');
+				detail.innerText = name + ": ";
+				const assign = document.createElement('span');
+				assign.innerText = value;
+				detail.appendChild(assign);
+
+				return detail;
+			}
+
+			const element = document.querySelector('#details');
+			element.appendChild(addDetail("Title", claim.value.title));
+			element.appendChild(addDetail("Name", claim.name));
+			element.appendChild(addDetail("ID", claim.claim_id));
+			element.appendChild(addDetail("Created", new Date(claim.meta.creation_timestamp * 1000).toLocaleDateString()));
+			if (claim.signing_channel) {
+				element.appendChild(addDetail("Channel", claim.signing_channel.name));
+				element.appendChild(addDetail("Channel ID", claim.signing_channel.claim_id));
+			}
+			element.appendChild(addDetail("Staked", claim.amount + " LBC"));
+
+			document.querySelector('#thumbnail').src = claim.value.thumbnail.url;
+			document.querySelector('.thumbnail').href = `https://${VIEWER_DOMAIN}/${claim.name}:${claim.claim_id}`
+		}
+
+		function setupCountryTable(nodes) {
+			const countries = {};
+
+			nodes.forEach(node=>{
+				if (!countries[node.geo.country]) countries[node.geo.country] = {"Country": node.geo.country, "#": 0};
+				countries[node.geo.country]['#'] += 1;
+			});
+
+			
+			Object.keys(countries).forEach(c=>{
+				countries[c]['%'] = Math.floor((countries[c]['#'] / nodes.length) * 10000) / 100;
+			});
+
+			setupTable("country-table", Object.values(countries), "%");
+		}
+
+		function setupNodeTable(nodes) {
+			setupTable("node-table", nodes.map(node=>{
+				return {"Address": node.address, "Country": node.geo.country, "ISP": node.geo.organization, "Details": node.details || ""}
+			}), "Country");
+		}
+	</script>
+</Layout>
+<style>
+	.top {
+		display: flex;
+		flex-direction: column;
+		gap: 25px;
+	}
+
+	.box {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 25px;
+		margin-top: 25px;
+	}
+
+	.box .details {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.box .details .thumbnail {
+		width: fit-content;
+		height: fit-content;
+		padding: 2px;
+		border-radius: 10%;
+		background-image: linear-gradient(270deg, var(--gradient1), var(--gradient2));
+	}
+
+	.box .details .thumbnail .img {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 140px;
+		height: 140px;
+		overflow: hidden;
+		border-radius: 10%;
+	}
+
+	.box .details .thumbnail .img img {
+		max-width: 100%;
+		max-height: 100%;
+	}
+
+	.box #details p {
+		font-weight: bold;
+		color: var(--accent) !important;
+	}
+</style>

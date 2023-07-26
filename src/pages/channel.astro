@@ -1,0 +1,150 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageTitle from '../components/PageTitle.astro';
+import Searchbar from '../components/Searchbar.astro';
+import Dropdown from '../components/Dropdown.astro';
+import Table from '../components/Table.astro';
+import TableScript from '../components/TableScript.astro';
+import LoadingCircle from '../components/LoadingCircle.astro';
+import ErrorMessage from '../components/ErrorMessage.astro';
+
+---
+
+<Layout title="Channel">
+	<TableScript/>
+	<PageTitle title="Channel" description="View statistics about a specific channel"/>
+	<div class="top">
+		<Searchbar name="Channel" description="channel_name:channel_id or channel_name" placeholder="e.g. @lilllyu:2"/>
+		<ErrorMessage/>
+		<LoadingCircle/>
+	</div>
+	<div id="box" class="box hide">
+		<Dropdown title="Channel Details" id="channel-details">
+			<div class="details">
+				<div id="details">
+				
+				</div>
+				<a class="avatar"><div class="img"><img id="avatar" src="" alt=""></div></a>
+			</div>
+		</Dropdown>
+		<Dropdown title="Claims" id="claims">
+			<Table id="claims-table"/>
+		</Dropdown>
+	</div>
+</Layout>
+<script is:inline define:vars={{VIEWER_DOMAIN: process.env.VIEWER_DOMAIN}}>
+	const params = new Proxy(new URLSearchParams(window.location.search), {
+		get: (searchParams, prop) => searchParams.get(prop),
+	});
+
+	(async ()=>{
+		if (!params.q) return;
+
+		let resp;
+
+		const loading = document.querySelector('#loading');
+		loading.classList.add('loading');
+
+		try {
+			// Fetch from API
+			const req = await fetch('/api/channel', {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					channel: params.q
+				})
+			});
+
+			resp = (await req.json()).result;
+		} catch (err) {
+			console.log(err);
+			loading.classList.remove('loading');
+			setError("failed to send request");
+			return;
+		}
+
+		loading.classList.remove('loading');
+		
+		if (resp.error) return setError(resp.error);
+
+		document.querySelector('#box').classList.remove('hide');
+
+		information(resp.channel);
+
+		setupTable('claims-table', resp.channel.claims.map(claim=>{
+			return {"Claim Name": `<a href="/claim?q=${claim.claim_name}:${claim.claim_id}">${claim.claim_name}</a>`, "Claim ID": claim.claim_id}
+		}));
+	})();
+
+	function information(channel) {
+
+		const addDetail = (name, value)=> {
+			const detail = document.createElement('p');
+			detail.innerText = name + ": ";
+			const assign = document.createElement('span');
+			assign.innerText = value;
+			detail.appendChild(assign);
+
+			return detail;
+		}
+
+		const element = document.querySelector('#details');
+		element.appendChild(addDetail("Name", channel.name));
+		element.appendChild(addDetail("ID", channel.claim_id));
+		element.appendChild(addDetail("Staked", channel.amount + " LBC"));
+		element.appendChild(addDetail("Claims", channel.meta.claims_in_channel));
+		element.appendChild(addDetail("Storage", channel.storage.formatted));
+
+		document.querySelector('#avatar').src = channel.value.thumbnail.url;
+		document.querySelector('.avatar').href = `https://${VIEWER_DOMAIN}/${channel.name}:${channel.claim_id}`
+	}
+</script>
+<style>
+	.top {
+		display: flex;
+		flex-direction: column;
+		gap: 25px;
+	}
+
+	.box {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 25px;
+		margin-top: 25px;
+	}
+
+	.box .details {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.box .details .avatar {
+		padding: 2px;
+		border-radius: 50%;
+		background-image: linear-gradient(270deg, var(--gradient1), var(--gradient2));
+	}
+
+	.box .details .avatar .img {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 140px;
+		height: 140px;
+		overflow: hidden;
+		border-radius: 50%;
+	}
+
+	.box .details .avatar .img img {
+		max-width: 100%;
+		max-height: 100%;
+	}
+
+	.box #details p {
+		font-weight: bold;
+		color: var(--accent) !important;
+	}
+</style>

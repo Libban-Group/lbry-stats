@@ -1,0 +1,97 @@
+@import url(https://fonts.bunny.net/css?family=ubuntu:300,300i,400,400i,500,500i,700,700i);
+:root {
+    --primary: #eee;
+    --secondary: #111;
+    --background: #1F1F1F;
+    --brand-gradient: linear-gradient(270deg, #C46222 0%, #F9D75E 100%);
+    --gradient1: #C46222;
+    --gradient2: #F9D75E;
+    --accent: #F9D75E;
+    --dim1: #2A2A2A;
+    --dim2: #454545;
+    --dim3: #606060;
+}
+
+* {
+    margin: 0;
+}
+
+.gradient-text {
+    background: var(--brand-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hb {
+    width: 100%;
+    height: 1px;
+    background-color: var(--primary);
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 25px;
+}
+
+.hide {
+    display: none !important;
+}
+
+main {
+    width: calc(100% - 300px);
+    transform: translate(300px);
+    transition: transform 300ms, width 300ms;
+}
+
+.hide-sidebar + main {
+    width: calc(100% - 60px);
+    transform: translateX(60px);
+}
+
+html {
+    font-family: 'Ubuntu', sans-serif;
+    color: var(--primary);
+    background-color: var(--background);
+}
+body {
+    display: flex;
+}
+code {
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+        Bitstream Vera Sans Mono, Courier New, monospace;
+}
+
+.table {
+    /* table-layout: fixed; */
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table thead th {
+    text-align: left;
+    padding: 5px 2px;
+    background-color: var(--dim3);
+    cursor: pointer;
+    /* border: 1px solid #333; */
+}
+
+.table tbody td {
+    padding: 5px 2px;
+    /* border: 1px solid #333; */
+}
+
+.table tr:nth-child(even) {
+    background-color: var(--dim3);
+}
+
+.table a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.table a:hover {
+    text-decoration: underline;
+}

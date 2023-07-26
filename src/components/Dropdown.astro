@@ -1,0 +1,77 @@
+---
+interface Props {
+	title: string;
+	id: string;
+}
+
+const { title, id } = Astro.props;
+---
+
+<div id={id} class="dropdown">
+    <div class="title">
+        <p class="gradient-text">{title}</p>
+        <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.70711 0.292893C8.31658 -0.097631 7.68342 -0.097631 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 2V1H7V2H9Z" fill="url(#paint0_linear_314_326)"/>
+            <defs>
+            <linearGradient id="paint0_linear_314_326" x1="8.4864" y1="0.0726536" x2="8.48167" y2="2.00001" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#C46222"/>
+            <stop offset="1" stop-color="#F9D75E"/>
+            </linearGradient>
+            </defs>
+        </svg>
+    </div>
+    <div class="box">
+        <slot/>
+    </div>
+</div>
+<script define:vars={{id}}>
+    document.querySelector(`#${id} .title`).addEventListener('click', (e)=>{
+        document.querySelector(`#${id} .title`).classList.toggle('rotate');
+        document.querySelector(`#${id} .box`).classList.toggle('collapse');
+    })
+</script>
+<style>
+    .dropdown {
+        padding: 1px;
+        min-width: 750px;
+        width: fit-content;
+        max-width: 100%;
+        border-radius: 10px;
+        background-image: linear-gradient(270deg, var(--gradient1), var(--gradient2));
+        /* background-image:linear-gradient(0deg, rgba(255, 255, 255, 0.6) 100%, rgba(255, 255, 255, 0) 100%); */
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .dropdown .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        border-radius: 10px 10px 0 0;
+        background-color: var(--dim1);
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    .dropdown .title p {
+        font-weight: bold;
+        font-size: 1.25rem;
+    }
+
+    .dropdown .box {
+        padding: 10px 20px;
+        border-radius: 0 0 10px 10px;
+        background-color: var(--dim2);
+        transition: max-height 500ms;
+    }
+
+    .title.rotate svg {
+        transform: rotate(180deg);
+    }
+
+    .box.collapse {
+        max-height: 0;
+    }
+</style>

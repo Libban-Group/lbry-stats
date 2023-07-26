@@ -1,0 +1,34 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404">
+	<div class="box">
+        <h1>404 - Not Found</h1>
+        <img src="https://cdn.lbry.pigg.es/get/404" alt="lbry://404">
+        <p><em>Here is the image located at <a href="/claim?q=404">lbry://404</a></em></p>
+        <p><em>I think you need it</em></p>
+    </div>
+</Layout>
+<style>
+    .box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .box img {
+        max-width: 50%;
+        border-radius: 20px;
+    }
+
+    .box a {
+        color: var(--accent);
+        text-decoration: none;
+    }
+
+    .box a:hover {
+        text-decoration: underline;
+    }
+</style>

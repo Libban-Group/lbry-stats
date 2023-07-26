@@ -1,17 +1,22 @@
 {
   "name": "lbry-stats",
-  "module": "src/index.js",
+  "module": "index.js",
   "type": "module",
   "scripts": {
-    "start": "bun run src/index.js",
-    "dev": "DEV=true nodemon --exec bun run src/index.js"
+    "start": "bun run build && bun run index.js",
+    "build": "astro build",
+    "dev": "DEV=true nodemon --ext '*' --exec 'bun run build && bun run index.js'"
+  },
+  "nodemonConfig": {
+    "ignore": ["/dist/"]
   },
   "devDependencies": {
     "bun-types": "^0.6.14"
   },
   "dependencies": {
-    "baojs": "^0.2.1",
-    "ejs": "^3.1.8",
-    "serve-static-bun": "^0.5.0"
+    "@astrojs/mdx": "^0.19.7",
+    "astro": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "hono": "^3.3.2"
   }
 }

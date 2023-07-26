@@ -31,14 +31,14 @@ function addEndpoint(app, page) {
 
         res = new Response(res);
         res.headers.set('Content-Type', 'text/html; charset=utf-8');
-        return ctx.sendRaw(res);
+        return res;
     });
 }
 
 async function compilePage(dir) {
     let res;
     try {
-        res = await render(`./views${dir}/index.ejs`, {query: ''});
+        res = await render(`./views${dir}.ejs`, {query: ''});
     } catch (err) {
         res = err;
     }

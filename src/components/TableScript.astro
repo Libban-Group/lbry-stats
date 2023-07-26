@@ -1,0 +1,57 @@
+<script is:inline>
+    function setupTable(table, data, orderBy, desc=true) {
+        const fields = [];
+        const head = document.querySelector(`#${table} thead`);
+        const body = document.querySelector(`#${table} tbody`);
+        data = orderList(data, orderBy, desc);
+
+        data.forEach(l=>{
+            Object.keys(l).forEach(key=>{
+                if (fields.indexOf(key) === -1) fields.push(key);
+            })
+            body.appendChild(createRow(Object.values(l)));
+        });
+
+        const tr = document.createElement('tr');
+
+        fields.forEach(f=>{
+            tr.appendChild((()=>{
+                const th = document.createElement('th');
+                th.innerText = f;
+                return th;
+            })());
+        })
+
+        head.appendChild(tr);
+
+        document.querySelectorAll(`#${table} thead tr th`).forEach(th=>{
+            th.addEventListener('click', (e)=>{
+                head.innerHTML = "";
+                body.innerHTML = "";
+                setupTable(table, data, e.target.innerText, e.target.innerText === orderBy && desc ? false : true);
+                console.log(e.target.innerText);
+            });
+        });
+    }
+
+    function createRow(data) {
+        const tr = document.createElement('tr');
+
+        data.forEach(d=>{
+            const td = document.createElement('td');
+            td.innerHTML = d || "";
+            tr.appendChild(td);
+        });
+
+        return tr;
+    }
+
+    function orderList(data, orderBy, desc) {
+        return data.sort((a, b)=>{
+            if (!a[orderBy]) return 1
+            if (!b[orderBy]) return -1;
+            if (typeof a[orderBy] === 'string') return desc ? ('' + a[orderBy]).localeCompare(b[orderBy]) : ('' + b[orderBy]).localeCompare(a[orderBy]);
+            return desc ? b[orderBy]-a[orderBy] : a[orderBy]-b[orderBy];
+        });
+    }
+</script>

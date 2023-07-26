@@ -2,6 +2,11 @@
 
 data/cache_geoip.json
 
+# generated types
+.astro/
+
+data.db
+
 # Logs
 
 logs

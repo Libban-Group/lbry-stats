@@ -1,0 +1,85 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageTitle from '../components/PageTitle.astro';
+import Card from '../components/Card.astro';
+---
+
+<Layout>
+	<PageTitle title="LBRY Statistics" description="View statistics about LBRY"/>
+	<div class="box">
+		<div class="cards">
+			<Card title="Claim" body="View information about a specific claim." href="/claim">
+				<svg viewBox="0 0 30 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M0 2.5V5C0 5.92188 0.744792 6.66667 1.66667 6.66667H2.5H5V2.5C5 1.11979 3.88021 0 2.5 0C1.11979 0 0 1.11979 0 2.5ZM5.83333 0C6.35417 0.697917 6.66667 1.5625 6.66667 2.5V18.3333C6.66667 20.1719 8.16146 21.6667 10 21.6667C11.8385 21.6667 13.3333 20.1719 13.3333 18.3333V18.0573C13.3333 16.3698 14.7031 15 16.3906 15H25V5C25 2.23958 22.7604 0 20 0H5.83333ZM24.1667 23.3333C27.3906 23.3333 30 20.724 30 17.5C30 17.0417 29.625 16.6667 29.1667 16.6667H16.3906C15.625 16.6667 15 17.2865 15 18.0573V18.3333C15 21.0938 12.7604 23.3333 10 23.3333H19.1667H24.1667Z" fill="url(#paint0_linear_310_254)"/>
+					<defs>
+					<linearGradient id="paint0_linear_310_254" x1="57.8204" y1="11.3495" x2="-7.05263e-05" y2="11.1669" gradientUnits="userSpaceOnUse">
+					<stop stop-color="#C46222"/>
+					<stop offset="1" stop-color="#F9D75E"/>
+					</linearGradient>
+					</defs>
+				</svg>
+			</Card>
+			<Card title="Channel" body="View information about a specific channel." href="/channel">
+				<svg viewBox="0 0 30 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M15 17.1429C17.2733 17.1429 19.4535 16.2398 21.0609 14.6323C22.6684 13.0249 23.5714 10.8447 23.5714 8.57143C23.5714 6.29814 22.6684 4.11797 21.0609 2.51051C19.4535 0.903059 17.2733 0 15 0C12.7267 0 10.5465 0.903059 8.93908 2.51051C7.33163 4.11797 6.42857 6.29814 6.42857 8.57143C6.42857 10.8447 7.33163 13.0249 8.93908 14.6323C10.5465 16.2398 12.7267 17.1429 15 17.1429ZM11.9397 20.3571C5.34375 20.3571 0 25.7009 0 32.2969C0 33.3951 0.890625 34.2857 1.98884 34.2857H28.0112C29.1094 34.2857 30 33.3951 30 32.2969C30 25.7009 24.6562 20.3571 18.0603 20.3571H11.9397Z" fill="url(#paint0_linear_302_303)"/>
+					<defs>
+					<linearGradient id="paint0_linear_302_303" x1="57.8204" y1="16.6767" x2="-0.000380096" y2="16.5525" gradientUnits="userSpaceOnUse">
+					<stop stop-color="#C46222"/>
+					<stop offset="1" stop-color="#F9D75E"/>
+					</linearGradient>
+					</defs>
+				</svg>
+			</Card>
+			<Card title="DHT" body="View information about connected DHT nodes." href="/dht">
+				<svg viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M12.1406 0.0293465C13.3058 0.223543 14.096 1.32845 13.9018 2.49363L13.2455 6.43113H19.6138L20.3839 1.79051C20.5781 0.625329 21.683 -0.16485 22.8482 0.0293465C24.0134 0.223543 24.8036 1.32845 24.6094 2.49363L23.9598 6.43113H27.8571C29.0424 6.43113 30 7.38872 30 8.57399C30 9.75926 29.0424 10.7168 27.8571 10.7168H23.2433L21.817 19.2883H25.7143C26.8996 19.2883 27.8571 20.2459 27.8571 21.4311C27.8571 22.6164 26.8996 23.574 25.7143 23.574H21.1004L20.3304 28.2146C20.1362 29.3798 19.0312 30.17 17.8661 29.9758C16.7009 29.7816 15.9107 28.6767 16.1049 27.5115L16.7612 23.5807H10.3862L9.61607 28.2213C9.42188 29.3865 8.31696 30.1767 7.15179 29.9825C5.98661 29.7883 5.19643 28.6834 5.39062 27.5182L6.04018 23.574H2.14286C0.957589 23.574 0 22.6164 0 21.4311C0 20.2459 0.957589 19.2883 2.14286 19.2883H6.7567L8.18303 10.7168H4.28571C3.10045 10.7168 2.14286 9.75926 2.14286 8.57399C2.14286 7.38872 3.10045 6.43113 4.28571 6.43113H8.89955L9.66964 1.79051C9.86384 0.625329 10.9687 -0.16485 12.1339 0.0293465H12.1406ZM12.529 10.7168L11.1027 19.2883H17.471L18.8973 10.7168H12.529Z" fill="url(#paint0_linear_302_312)"/>
+					<defs>
+					<linearGradient id="paint0_linear_302_312" x1="57.8204" y1="14.5979" x2="-0.000298612" y2="14.4559" gradientUnits="userSpaceOnUse">
+					<stop stop-color="#C46222"/>
+					<stop offset="1" stop-color="#F9D75E"/>
+					</linearGradient>
+					</defs>
+				</svg>				
+			</Card>
+		</div>
+		<div class="cards">
+			<Card title="API" body="Read the documentation" href="/docs/api">
+				<svg width="30" height="35" viewBox="0 0 30 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M6.42857 0C2.87946 0 0 2.87946 0 6.42857V27.8571C0 31.4062 2.87946 34.2857 6.42857 34.2857H25.7143H27.8571C29.0424 34.2857 30 33.3281 30 32.1429C30 30.9576 29.0424 30 27.8571 30V25.7143C29.0424 25.7143 30 24.7567 30 23.5714V2.14286C30 0.957589 29.0424 0 27.8571 0H25.7143H6.42857ZM6.42857 25.7143H23.5714V30H6.42857C5.2433 30 4.28571 29.0424 4.28571 27.8571C4.28571 26.6719 5.2433 25.7143 6.42857 25.7143ZM8.57143 9.64286C8.57143 9.05357 9.05357 8.57143 9.64286 8.57143H22.5C23.0893 8.57143 23.5714 9.05357 23.5714 9.64286C23.5714 10.2321 23.0893 10.7143 22.5 10.7143H9.64286C9.05357 10.7143 8.57143 10.2321 8.57143 9.64286ZM9.64286 12.8571H22.5C23.0893 12.8571 23.5714 13.3393 23.5714 13.9286C23.5714 14.5179 23.0893 15 22.5 15H9.64286C9.05357 15 8.57143 14.5179 8.57143 13.9286C8.57143 13.3393 9.05357 12.8571 9.64286 12.8571Z" fill="url(#paint0_linear_310_241)"/>
+					<defs>
+					<linearGradient id="paint0_linear_310_241" x1="57.8204" y1="16.6767" x2="-0.000380096" y2="16.5525" gradientUnits="userSpaceOnUse">
+					<stop stop-color="#C46222"/>
+					<stop offset="1" stop-color="#F9D75E"/>
+					</linearGradient>
+					</defs>
+				</svg>					
+			</Card>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.box {
+		display: flex;
+		flex-direction: column;
+		gap: 50px;
+	}
+
+	.cards {
+		/* display: flex;
+		justify-content:center;
+	    align-items:center;
+      	gap: 25px;
+		flex-wrap: wrap;
+		max-width: 1000px; */
+
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 25px;
+	}
+
+	.cards svg {
+		height: 2.5rem;
+		color: var(--brand-gradient);
+	}
+</style>

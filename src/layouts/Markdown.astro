@@ -1,0 +1,43 @@
+---
+import PageTitle from '../components/PageTitle.astro';
+import Layout from '../layouts/Layout.astro';
+
+const { frontmatter } = Astro.props;
+---
+
+<Layout title={frontmatter.title} description="Hi! I'm Philip. Welcome to my website!">
+    <PageTitle title={frontmatter.title} description={frontmatter.description}/>
+    <div class="md">
+        <slot />
+    </div>
+</Layout>
+<style is:global>
+    .md {
+        display: flex;
+		flex-direction: column;
+		gap: 25px;
+    }
+
+    .md a {
+        color: var(--accent);
+        text-decoration: none;
+    }
+
+    .md a:hover {
+        text-decoration: underline;
+    }
+
+
+    code {
+        font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+            Bitstream Vera Sans Mono, Courier New, monospace;
+    }
+
+
+    pre {
+        padding: 10px;
+        border-radius: 10px;
+        width: fit-content;
+        max-width: 1000px;
+    }
+</style>

@@ -1,0 +1,123 @@
+---
+layout: '../../layouts/Markdown.astro'
+title: 'API Docs'
+description: 'Learn about how the API works'
+---
+
+This page will go through how the API works and how it can be used for external use.
+
+Whenever something referrs to lbrynet, consult the [SDK Documentation](https://lbry.tech/api/sdk).
+
+Geo-IP information is fetched from [GeoJS](https://www.geojs.io/).
+
+All endpoints supports both **GET** and **POST** requests.
+
+For **GET** requests, the parameters should be  query parameters.<br/>
+e.g. */api/claim?claim=elons-blue-check-mark:9*
+
+For **POST** requests, the parameters should be in the body, formated as JSON.<br/>
+e.g. *{ '{"channel": "@lilllyu"}' }*
+
+<div>
+## Endpoint: */api/claim*
+
+Parameters: *claim*
+<br/>
+Example response:
+```json
+{
+    "result": {
+        "claim": {
+            ...(response resolve claim from lbrynet)
+            "peers": [
+                ...
+                {
+                    "address": "149.102.153.137",
+                    "node_id": "...",
+                    "tcp_port": 4444,
+                    "udp_port": 4444,
+                    "details": "Pigges", // Can be undefined
+                    "geo": {
+                        "country": "United Kingdom",
+                        "country_code": "GB",
+                        "continent_code": "EU",
+                        "region": "England",
+                        "city": "Portsmouth",
+                        "timezone": "Europe/London",
+                        "organization": "Contabo GmbH"
+                    }
+                }
+            ],
+            "total_peers": 12
+        }
+    }
+}
+```
+</div>
+
+<div>
+## Endpoint: */api/channel*
+**Notice:** Channels with a lot of claims and which have not hit the cache yet can take a long time to recieve.
+<br/>
+Parameters: *channel*
+<br/>
+Example response:
+```json
+{
+    "result": {
+        "channel": {
+            ...(response resolve channel from lbrynet)
+            "claims": [
+                ...
+                {
+                    "title": "Wo Long Fallen Dynasty #01...", // If applicable
+                    "claim_name": "WoLongFallenDynasty_01",
+                    "claim_id": "5f083d29e93476ff7247753cab4c2afcb4bd7f22",
+                    "type": "claim",
+                    "value_type": "stream",
+                    "size": 6411725043 // If applicable
+                }
+            ],
+            "storage": {
+                "bytes": 944070138419,
+                "formatted": "879.3 GB"
+            }
+        }
+    }
+}
+```
+</div>
+
+<div>
+## Endpoint: */api/dht-nodes*
+<br/>
+Example response:
+```json
+{
+    "result": {
+        "dht-nodes": {
+            "nodes": [
+                ...
+                {
+                    "address": "149.102.153.137",
+                    "node_id": "...",
+                    "tcp_port": 4444,
+                    "udp_port": 4444,
+                    "details": "Pigges", // Can be undefined
+                    "geo": {
+                        "country": "United Kingdom",
+                        "country_code": "GB",
+                        "continent_code": "EU",
+                        "region": "England",
+                        "city": "Portsmouth",
+                        "timezone": "Europe/London",
+                        "organization": "Contabo GmbH"
+                    }
+                }
+            ],
+            "total_nodes": 52
+        }
+    }
+}
+```
+</div>
