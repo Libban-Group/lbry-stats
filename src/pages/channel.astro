@@ -32,7 +32,7 @@ import ErrorMessage from '../components/ErrorMessage.astro';
 		</Dropdown>
 	</div>
 </Layout>
-<script is:inline define:vars={{VIEWER_DOMAIN: process.env.VIEWER_DOMAIN}}>
+<script is:inline define:vars={{VIEWER_DOMAIN: process.env.VIEWER_DOMAIN || 'lbry.pigg.es'}}>
 	const params = new Proxy(new URLSearchParams(window.location.search), {
 		get: (searchParams, prop) => searchParams.get(prop),
 	});
