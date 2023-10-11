@@ -11,12 +11,12 @@
     "ignore": ["/dist/"]
   },
   "devDependencies": {
-    "bun-types": "^0.7.0"
+    "bun-types": "^1.0.4"
   },
   "dependencies": {
-    "@astrojs/mdx": "^0.19.7",
-    "astro": "^2.8.5",
+    "@astrojs/mdx": "^1.1.1",
+    "astro": "^3.2.4",
     "dotenv": "^16.3.1",
-    "hono": "^3.3.2"
+    "hono": "^3.7.5"
   }
 }
