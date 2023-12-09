@@ -5,7 +5,7 @@
   "scripts": {
     "start": "bun run build && bun run index.js",
     "build": "astro build",
-    "dev": "DEV=true nodemon --ext '*' --exec 'bun run build && bun run index.js'"
+    "dev": "DEV=true bun run build && bun --watch run index.js"
   },
   "nodemonConfig": {
     "ignore": ["/dist/"]

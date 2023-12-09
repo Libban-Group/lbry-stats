@@ -1,17 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageTitle from '../components/PageTitle.astro';
+import Searchbar from '../components/Searchbar.astro';
 import Dropdown from '../components/Dropdown.astro';
 import Map from '../components/Map.astro';
 import Table from '../components/Table.astro';
 import TableScript from '../components/TableScript.astro';
 import LoadingCircle from '../components/LoadingCircle.astro';
 import ErrorMessage from '../components/ErrorMessage.astro';
+import AddMonitor from '../components/AddMonitor.astro';
 ---
 
-<Layout title="DHT">
+<Layout title="SPV">
 	<TableScript/>
-	<PageTitle title="DHT" description="View statistics about the connected DHT-nodes"/>
+	<PageTitle title="SPV" description="View statistics about the SPV nodes"/>
 	<div class="top">
 		<ErrorMessage/>
 		<LoadingCircle/>
@@ -29,6 +31,8 @@ import ErrorMessage from '../components/ErrorMessage.astro';
 		</Dropdown>
 	</div>
 
+    <AddMonitor name="SPV" placeholder="myspvserver.com:50001"/>
+
 	<script is:inline>
 		(async ()=>{
 			let resp;
@@ -37,12 +41,11 @@ import ErrorMessage from '../components/ErrorMessage.astro';
 
 			// Fetch from API
 			try {
-				const req = await fetch('/api/dht-nodes', {
-					method: "POST",
+				const req = await fetch('/api/spv-nodes', {
+					method: "GET",
 					headers: {
 						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({})
+					}
 				});
 
 				resp = (await req.json()).result;
@@ -53,6 +56,8 @@ import ErrorMessage from '../components/ErrorMessage.astro';
 				return;
 			}
 
+            console.log(resp);
+
 			loading.classList.remove('loading');
 
 			if (resp.error) return setError(resp.error);
@@ -61,11 +66,9 @@ import ErrorMessage from '../components/ErrorMessage.astro';
 
 			//console.log(resp);
 
-			resp = resp["dht-nodes"];
-
 			map(resp.nodes);
 
-			document.querySelector('#total').innerText = resp.total_nodes;
+			document.querySelector('#total').innerText = resp.nodes.length;
 
 			setupCountryTable(resp.nodes);
 			setupNodeTable(resp.nodes);
@@ -75,7 +78,6 @@ import ErrorMessage from '../components/ErrorMessage.astro';
 			const countries = {};
 
 			nodes.forEach(node=>{
-				if (!node.geo) return console.log(node);
 				if (!countries[node.geo.country]) countries[node.geo.country] = {"Country": node.geo.country, "#": 0};
 				countries[node.geo.country]['#'] += 1;
 			});
@@ -90,7 +92,7 @@ import ErrorMessage from '../components/ErrorMessage.astro';
 
 		function setupNodeTable(nodes) {
 			setupTable("node-table", nodes.map(node=>{
-				return {"Address": node.address, "Country": node.geo ? node.geo.country : "", "ISP": node.geo ? node.geo.organization : "", "Details": node.details || ""}
+				return {"Hostname": `${node.hostname}:${node.port}`, "Country": node.geo.country, "ISP": node.geo.organization, "Status": node.online ? "online": "offline", "Details": node.details || ""}
 			}), "Country");
 		}
 	</script>
@@ -107,6 +109,7 @@ import ErrorMessage from '../components/ErrorMessage.astro';
 		flex-direction: column;
 		align-items: center;
 		gap: 25px;
+		margin-bottom: 25px;
 	}
 
 	.box .total {

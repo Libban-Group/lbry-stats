@@ -186,6 +186,8 @@
     const countries = {};
 
     nodes.forEach(node=>{
+      if (!node.geo) return console.log(node);
+
       if (!countries[node.geo.country.toLowerCase().replaceAll(' ', '_')]) countries[node.geo.country.toLowerCase().replaceAll(' ', '_')] = [];
       countries[node.geo.country.toLowerCase().replaceAll(' ', '_')].push(node);
     });

@@ -1,0 +1,127 @@
+---
+interface Props {
+	name: string;
+	description?: string;
+    placeholder?: string;
+}
+
+const { name, description, placeholder } = Astro.props;
+---
+
+<div class="monitor">
+    <h2>Add {name} to monitor</h2>
+    <div class="box">
+        <form id="monitor">
+            <input type="text" name="spv" id="spv" placeholder={placeholder}>
+            <button>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+                <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.<path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg> -->
+            </button>
+        </form>
+    </div>
+</div>
+<script define:vars={{name: name.toLowerCase()}}>
+    document.querySelector('#monitor').addEventListener('submit', (e)=>{
+        e.preventDefault();
+        return handleNewMonitor(document.querySelector('#spv').value);
+    })
+    document.querySelector('#box').classList.add('hide');
+    const loading = document.querySelector('#loading');
+
+    async function handleNewMonitor(server) {
+            let resp;
+            loading.classList.add('loading');
+            // Fetch from API
+			try {
+				const req = await fetch(`/api/${name}-add`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+                        server
+                    })
+				});
+
+				resp = (await req.json()).result;
+			} catch(err) {
+				console.log(err);
+				loading.classList.remove('loading');
+				setError("failed to send request");
+				return;
+			}
+
+            loading.classList.remove('loading');
+
+            if (resp.error) return setError(resp.error);
+
+            console.log(resp);
+        }
+</script>
+<style>
+    .monitor {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .monitor p {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.25rem;
+    }
+
+    .monitor p svg {
+        fill: var(--primary);
+        height: 1.25rem;
+    }
+
+    .monitor .box {
+        padding: 1px;
+        border-radius: 10px;
+        background-image: linear-gradient(270deg, var(--gradient1), var(--gradient2));
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    }
+
+    .monitor form {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 500px;
+        border-radius: 10px;
+        background-color: var(--dim1);
+        overflow: hidden;
+    }
+    
+    .monitor form input {
+        font-size: 1.1rem;
+        color: var(--primary);
+        border: none;
+        outline: none;
+        padding: 15px 15px;
+        background-color: transparent;
+    }
+
+    .monitor form button {
+        outline: none;
+        border: none;
+        fill: var(--primary);
+        padding: 15px 15px;
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+    .monitor form button:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .monitor form button svg {
+        height: 1.5rem;
+    }
+
+    .monitor form button:hover svg {
+        height: 1.5rem;
+        fill: var(--accent);
+    }
+</style>
