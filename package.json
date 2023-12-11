@@ -11,7 +11,7 @@
     "ignore": ["/dist/"]
   },
   "devDependencies": {
-    "bun-types": "^1.0.4"
+    "bun-types": "^1.0.16"
   },
   "dependencies": {
     "@astrojs/mdx": "^2.0.0",
